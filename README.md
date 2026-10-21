@@ -51,6 +51,7 @@ The full rules, thesaurus of emotion words, and belief-system definitions are in
 ### Code
 | File | Description |
 | --- | --- |
+| `charlie_kirk_episodes_by_year.py` | Pulls the full episode list for *The Charlie Kirk Show* from its official RSS feed and groups titles, dates, and links by year, to build the sampling frame |
 | `transcribe.py` | Batch transcription of podcast audio with Whisper (local model or OpenAI API) |
 
 ### Visualizations
@@ -65,7 +66,13 @@ Both visualizations are self-contained D3 pages; open them in a browser.
 
 ## Pipeline
 
-1. **Sample** podcast episodes for each speaker across 2020–2025.
+1. **Sample** podcast episodes for each speaker across 2020–2025. For Kirk, list every episode by year from the show's RSS feed (standard library only, no installs needed):
+   ```bash
+   python3 charlie_kirk_episodes_by_year.py                                   # plain text to the terminal
+   python3 charlie_kirk_episodes_by_year.py --format csv -o kirk_episodes.csv  # CSV: Year, Date, Title, Link
+   python3 charlie_kirk_episodes_by_year.py --format markdown > kirk_episodes.md
+   ```
+   Each episode's link is its audio file where the feed provides one, otherwise the episode page. Use `--feed-url` to point at a different feed.
 2. **Transcribe** audio to text:
    ```bash
    pip install openai-whisper    # requires ffmpeg on your system
